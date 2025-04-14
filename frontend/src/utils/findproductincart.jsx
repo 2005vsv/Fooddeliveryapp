@@ -1,0 +1,1 @@
+export const Findfoodincart=(cart,id)=>cart?.length>0 && cart.some((food)=>food.id===id);
