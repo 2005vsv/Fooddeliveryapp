@@ -57,7 +57,7 @@ function Foodpage() {
       </nav> */}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
-        {filteredcategory
+        {filteredcategory 
           .filter((food) => food.name.toLowerCase().includes(query))
           .map((food) => (
             <Dishescard key={food.id} food={food} query={query} />

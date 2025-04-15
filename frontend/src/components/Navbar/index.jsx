@@ -149,6 +149,11 @@ function Navbar({ setquery, query, food }) {
                         Login
                       </button>
                     </li>
+                    <li className="hover:text-indigo-600 cursor-pointer">
+                      <button onClick={onloginclick} className="cursor-pointer">
+                        Signup
+                      </button>
+                    </li>
                   </ul>
                 </div>
               )}

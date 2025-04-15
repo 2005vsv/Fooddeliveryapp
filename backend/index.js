@@ -1,25 +1,22 @@
 const express = require("express");
 const dishes = require("./routes/dishesroute");
 const user = require("./routes/userroute");
-const mongoose = require('mongoose');
-const cors=require("cors");
-const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUI=require('swagger-ui-express');
+const mongoose = require("mongoose");
+const cors = require("cors");
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUI = require("swagger-ui-express");
+const orders = require("./routes/orderroute");
 
 const options = {
   definition: {
-    openapi: '3.0.0',
+    openapi: "3.0.0",
     info: {
-      title: 'Hello World',
-      version: '1.0.0',
+      title: "Hello World",
+      version: "1.0.0",
     },
   },
-  apis: ['./routes/*.js'], // files containing annotations as above
+  apis: ["./routes/*.js"], // files containing annotations as above
 };
-
-
-
-
 
 // const { senddishes } = require("./controllers/dishes");
 // const { signupuser, loginuser } = require("./controllers/usercontroller");
@@ -27,7 +24,7 @@ const app = express();
 const port = 5000;
 app.use(express.json());
 const openapiSpecification = swaggerJsdoc(options);
-app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(openapiSpecification));
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(openapiSpecification));
 app.use(cors());
 app.use((req, res, next) => {
   console.log("time", Date.now());
@@ -40,12 +37,19 @@ app.use((req, res, next) => {
   }
 });
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/foodapp');
+  // await mongoose.connect(
+  //   "mongodb+srv://vernekarvaishnav05-67fe430914452e68d4e4e8ff:<bG36ywepgBD7JvxD>@gfg-mern.wx9cqof.mongodb.net/?retryWrites=true&w=majority&appName=GFG-MERN"
+  // );
+  await mongoose.connect(
+    "mongodb+srv://vernekarvaishnav05:bG36ywepgBD7JvxD@gfg-mern.wx9cqof.mongodb.net/?retryWrites=true&w=majority&appName=GFG-MERN"
+  );
+  
+
   console.log("database connected");
 
   // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }
-main().catch(err => console.log(err));
+main().catch((err) => console.log(err));
 
 // const cat=mongoose.model('cat',{name:String});
 // const kitty=new cat({name:'zildjian'});
@@ -59,6 +63,7 @@ main().catch(err => console.log(err));
 // })
 app.use("/api", dishes);
 app.use("/api", user);
+app.use("/api", orders);
 app.get("/", (req, res) => {
   res.send("home hello");
 });
