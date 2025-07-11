@@ -1,5 +1,5 @@
 const usermodel = require("../models/user");
-const bcrypt = require("bcrypt");
+const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const loginuser = async (req, res) => {
   const { email, password } = req.body;
@@ -8,7 +8,7 @@ const loginuser = async (req, res) => {
   if (!user) {
     return res.status(400).send("user does not exist");
   }
-  const ispasswordmatchingfromdb = await bcrypt.compare(
+  const ispasswordmatchingfromdb = await bcryptjs.compare(
     password,
     user.password
   );
@@ -35,7 +35,7 @@ const signupuser = async (req, res) => {
 
     const userexists = await usermodel.findOne({ email: email });
     if (!userexists) {
-      const hashedpassword = await bcrypt.hash(password, 10);
+      const hashedpassword = await bcryptjs.hash(password, 10);
       const user = new usermodel({
         name: name,
         email: email,
