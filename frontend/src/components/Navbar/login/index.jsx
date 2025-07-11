@@ -19,7 +19,6 @@ function Login() {
       navigate("/foodpage");
     }
   };
-
   const onemailchange = (e) => {
     logindispatch({
       type: "EMAIL",

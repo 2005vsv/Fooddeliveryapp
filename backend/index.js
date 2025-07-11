@@ -1,92 +1,67 @@
 const express = require("express");
-const dishes = require("./routes/dishesroute");
-const user = require("./routes/userroute");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUI = require("swagger-ui-express");
+
+const dishesroutes = require("./routes/dishesroute");
+// const dishRoutes = require("./routes/dishes");
+const user = require("./routes/userroute");
 const orders = require("./routes/orderroute");
 
+const app = express();
+const port = 5000;
+
+// Swagger configuration
 const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Hello World",
+      title: "Hello World API",
       version: "1.0.0",
     },
   },
-  apis: ["./routes/*.js"], // files containing annotations as above
+  apis: ["./routes/*.js"],
 };
 
-// const { senddishes } = require("./controllers/dishes");
-// const { signupuser, loginuser } = require("./controllers/usercontroller");
-const app = express();
-const port = 5000;
-app.use(express.json());
 const openapiSpecification = swaggerJsdoc(options);
-app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(openapiSpecification));
+
+// Middleware
 app.use(cors());
+app.use(express.json());
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(openapiSpecification));
+
 app.use((req, res, next) => {
-  console.log("time", Date.now());
+  console.log("Time:", new Date().toISOString(), "| Method:", req.method, "| Path:", req.path);
   next();
-  const x = 1;
-  if (x > 10) {
-    next();
-  } else {
-    console.log("fails");
-  }
 });
-async function main() {
-  // await mongoose.connect(
-  //   "mongodb+srv://vernekarvaishnav05-67fe430914452e68d4e4e8ff:<bG36ywepgBD7JvxD>@gfg-mern.wx9cqof.mongodb.net/?retryWrites=true&w=majority&appName=GFG-MERN"
-  // );
-  await mongoose.connect(
-    "mongodb+srv://vernekarvaishnav05:bG36ywepgBD7JvxD@gfg-mern.wx9cqof.mongodb.net/?retryWrites=true&w=majority&appName=GFG-MERN"
-  );
-  
 
-  console.log("database connected");
-
-  // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
-}
-main().catch((err) => console.log(err));
-
-// const cat=mongoose.model('cat',{name:String});
-// const kitty=new cat({name:'zildjian'});
-// kitty.save().then(()=>console.log("meow"));
-
-// const kitty2=new cat({name:'bella'});
-// kitty2.save().then(()=>console.log("meow"));
-
-// cat.find().then((kittens)=>{
-//   console.log(kittens);
-// })
-app.use("/api", dishes);
+// Routes
+app.use("/api", dishesroutes);
 app.use("/api", user);
 app.use("/api", orders);
+
+// Home route
 app.get("/", (req, res) => {
-  res.send("home hello");
+  res.send("Welcome to the API!");
 });
 
-//   console.log(req.query.limit);
-//   res.send([
-//     {
-//       id: 1,
-//       name: "tanish",
-//     },
-//   ]);
+// MongoDB connection
+async function connectDB() {
+  try {
+    await mongoose.connect(
+      "mongodb://localhost:27017/foodapp"
 
-// app.post("/signup", signupuser);
+    );
+    console.log("✅ MongoDB connected successfully");
+  } catch (err) {
+    console.error("❌ MongoDB connection error:", err.message);
+  }
+}
 
-//   res.status(200).send([
-//     {
-//       email: "",
-//       password: "",
-//     },
-//   ]);
+connectDB();
 
-// app.post("/login",loginuser);
+// Start server
 app.listen(port, () => {
-  console.log("running at port 5000");
+  console.log(`🚀 Server running at http://localhost:${port}`);
 });
-// browser by default considers 'get' request
