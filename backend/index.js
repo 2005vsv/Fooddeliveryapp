@@ -50,7 +50,7 @@ app.get("/", (req, res) => {
 async function connectDB() {
   try {
     await mongoose.connect(
-      "mongodb://localhost:27017/foodapp"
+      "mongodb+srv://vernekarvaishnav05:PmgggZIOflm6z024@foodapp.tqwojzl.mongodb.net/?retryWrites=true&w=majority&appName=foodapp"
 
     );
     console.log("✅ MongoDB connected successfully");

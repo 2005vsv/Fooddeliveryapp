@@ -1,16 +1,9 @@
-const Dish = require("../models/dishes");
-// const senddishes = (req, res) => {
-//   dishesmodel.find().then((dishes) => {
-//     console.log(dishes);
-//     res.send(dishes);
-//   });
-// };
-const dishesdata = 
-   [
+const dishesdata = {
+  data: [
     {
-      // _id: {
-      //   $oid: "67f818fc64d961422a9faa26",
-      // },
+      _id: {
+        $oid: "67f818fc64d961422a9faa26",
+      },
       id: 11,
       name: "Dosa",
       img: "https://pipingpotcurry.com/wp-content/uploads/2020/11/Dosa-recipe-plain-sada-dosa-Piping-Pot-Curry.jpg",
@@ -19,9 +12,9 @@ const dishesdata =
       quantity: 0,
     },
     {
-      // _id: {
-      //   $oid: "67f818fc64d961422a9faa27",
-      // },
+      _id: {
+        $oid: "67f818fc64d961422a9faa27",
+      },
       id: 7,
       name: "Idli/Sambhar",
       img: "https://vaya.in/recipes/wp-content/uploads/2018/02/Idli-and-Sambar-1.jpg",
@@ -30,9 +23,9 @@ const dishesdata =
       quantity: 0,
     },
     {
-      // _id: {
-      //   $oid: "67f818fc64d961422a9faa28",
-      // },
+      _id: {
+        $oid: "67f818fc64d961422a9faa28",
+      },
       id: 8,
       name: "Dal Makhni",
       img: "https://recipes.timesofindia.com/thumb/53097626.cms?width=1200&height=900",
@@ -41,9 +34,9 @@ const dishesdata =
       quantity: 0,
     },
     {
-      // _id: {
-      //   $oid: "67f818fc64d961422a9faa29",
-      // },
+      _id: {
+        $oid: "67f818fc64d961422a9faa29",
+      },
       id: 9,
       name: "Cold Coffee",
       img: "https://www.vegrecipesofindia.com/wp-content/uploads/2021/04/cold-coffee-recipe-2.jpg",
@@ -52,9 +45,9 @@ const dishesdata =
       quantity: 0,
     },
     {
-      // _id: {
-      //   $oid: "67f818fc64d961422a9faa2a",
-      // },
+      _id: {
+        $oid: "67f818fc64d961422a9faa2a",
+      },
       id: 10,
       name: " Tea",
       img: "https://static.toiimg.com/photo/83173328.cms",
@@ -63,9 +56,9 @@ const dishesdata =
       quantity: 0,
     },
     {
-      // _id: {
-      //   $oid: "67f818fc64d961422a9faa2b",
-      // },
+      _id: {
+        $oid: "67f818fc64d961422a9faa2b",
+      },
       id: 2,
       name: " Coke",
       img: "https://5.imimg.com/data5/SELLER/Default/2021/12/MI/CM/OC/26602448/300-ml-coke-original-500x500.jpg",
@@ -74,9 +67,9 @@ const dishesdata =
       quantity: 0,
     },
     {
-      // _id: {
-      //   $oid: "67f818fc64d961422a9faa2c",
-      // },
+      _id: {
+        $oid: "67f818fc64d961422a9faa2c",
+      },
       id: 3,
       name: "Lassi",
       img: "https://pipingpotcurry.com/wp-content/uploads/2021/05/Lassi-in-a-glass.jpg",
@@ -85,9 +78,9 @@ const dishesdata =
       quantity: 0,
     },
     {
-      // _id: {
-      //   $oid: "67f818fc64d961422a9faa2d",
-      // },
+      _id: {
+        $oid: "67f818fc64d961422a9faa2d",
+      },
       id: 12,
       name: "Milk",
       img: "https://m.media-amazon.com/images/I/61lzZAgOCzL.jpg",
@@ -96,9 +89,9 @@ const dishesdata =
       quantity: 0,
     },
     {
-      // _id: {
-      //   $oid: "67f818fc64d961422a9faa2e",
-      // },
+      _id: {
+        $oid: "67f818fc64d961422a9faa2e",
+      },
       id: 5,
       name: "Tandoori Platter",
       img: "https://images.slurrp.com/prod/recipe_images/better-butter/tandoori-paneer-platter_HX3XOHVHLY0WD9AXFZZG.webp?impolicy=slurrp-20210601&width=1200&height=675",
@@ -107,9 +100,9 @@ const dishesdata =
       quantity: 0,
     },
     {
-      // _id: {
-      //   $oid: "67f818fc64d961422a9faa2f",
-      // },
+      _id: {
+        $oid: "67f818fc64d961422a9faa2f",
+      },
       id: 6,
       name: "Naan",
       img: "https://static.toiimg.com/thumb/53338316.cms?width=1200&height=900",
@@ -118,9 +111,9 @@ const dishesdata =
       quantity: 0,
     },
     {
-      // _id: {
-      //   $oid: "67f818fc64d961422a9faa30",
-      // },
+      _id: {
+        $oid: "67f818fc64d961422a9faa30",
+      },
       id: 13,
       name: "Paneer Butter Masala",
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT5kecc5mebmjSS-CrZAKaa_RUwoFa5NOuwg&usqp=CAU",
@@ -129,9 +122,9 @@ const dishesdata =
       quantity: 0,
     },
     {
-      // _id: {
-      //   $oid: "67f818fc64d961422a9faa31",
-      // },
+      _id: {
+        $oid: "67f818fc64d961422a9faa31",
+      },
       id: 14,
       name: "Gol Gappe",
       img: "https://static.toiimg.com/photo/75107900.cms",
@@ -139,28 +132,6 @@ const dishesdata =
       price: 60,
       quantity: 0,
     },
-  ]
-
-  const insertDishes = async (req, res) => {
-  try {
-    await Dish.insertMany(dishesdata);
-    res.status(201).json({ message: "Dishes added successfully!" });
-  } catch (error) {
-    console.error("Error inserting dishes:", error);
-    res.status(500).json({ error: "Failed to insert dishes" });
-  }
+  ],
 };
-
-const getDishes = async (req, res) => {
-  try {
-    const dishes = await Dish.find();
-    res.status(200).json(dishes);
-  } catch (error) {
-    console.error("Error fetching dishes:", error);
-    res.status(500).json({ error: "Failed to fetch dishes" });
-  }
-};
-
-module.exports = { insertDishes, getDishes };
-
-
+module.exports = dishes;

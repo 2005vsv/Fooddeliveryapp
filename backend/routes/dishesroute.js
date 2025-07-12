@@ -1,15 +1,26 @@
 const express=require("express");
 const router=express.Router();
-
-const {senddishes}=require("../controllers/dishes");
+const { insertDishes, getDishes } = require("../controllers/dishes");
 /**
  * @openapi
  * /api/dishes:
  *   get:
- *     description: Welcome to swagger-jsdoc!
+ *     description: Get all dishes
  *     responses:
  *       200:
- *         description: Returns a mysterious string.
+ *         description: Array of dishes
  */
-router.get("/dishes",senddishes);
-module.exports=router;
+router.get("/dishes", getDishes);
+
+/**
+ * @openapi
+ * /api/dishes/insert:
+ *   post:
+ *     description: Insert sample dishes into DB
+ *     responses:
+ *       201:
+ *         description: Dishes inserted
+ */
+router.post("/dishes/insert", insertDishes);
+
+module.exports = router;
