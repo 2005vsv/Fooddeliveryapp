@@ -6,7 +6,7 @@ const swaggerUI = require("swagger-ui-express");
 
 const dishesroutes = require("./routes/dishesroute");
 // const dishRoutes = require("./routes/dishes");
-const user = require("./routes/userroute");
+const authRoutes = require('./routes/userroute');
 const orders = require("./routes/orderroute");
 
 const app = express();
@@ -27,7 +27,8 @@ const options = {
 const openapiSpecification = swaggerJsdoc(options);
 
 // Middleware
-app.use(cors());
+// app.use(cors());
+app.use(cors({ origin: 'https://fooddelivery-lmzi.vercel.app/', credentials: true }));
 app.use(express.json());
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(openapiSpecification));
 
@@ -38,7 +39,8 @@ app.use((req, res, next) => {
 
 // Routes
 app.use("/api", dishesroutes);
-app.use("/api", user);
+// app.use("/api", user);
+app.use('/api/auth', authRoutes);
 app.use("/api", orders);
 
 // Home route
