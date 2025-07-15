@@ -8,6 +8,7 @@ import Contact from './Pages/Home/Contact'
 import Foodpage from './Pages/Home/Foodpage'
 import Cart from './Pages/Home/cart'
 import Authlogin from './authlogin'
+import Authsignup from './authsignup'
 
 function App() {
   
@@ -21,6 +22,7 @@ function App() {
       <Route path='/foodpage' element={<Foodpage/>}/>
       <Route path='/cart' element={<Cart/>}/>
       <Route path='/auth/login' element={<Authlogin/>}/>
+      <Route path="/signup" element={<Authsignup />} />
 
 
     </Routes>

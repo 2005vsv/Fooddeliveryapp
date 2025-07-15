@@ -5,12 +5,16 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { Cartprovider } from "./cartcontext/index.jsx";
 import { Loginprovider } from "./cartcontext/logincontext.jsx";
+import { SignupProvider } from "./cartcontext/signupcontext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Cartprovider>
       <Loginprovider>
-        <App />
+        <SignupProvider>
+          <App />
+        </SignupProvider>
+        
       </Loginprovider>
     </Cartprovider>
   </BrowserRouter>
