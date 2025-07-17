@@ -1,14 +1,17 @@
-const express=require("express");
-const router=express.Router();
+const express = require("express");
 const { insertDishes, getDishes } = require("../controllers/dishes");
+const router = express.Router();
+
 /**
  * @openapi
  * /api/dishes:
  *   get:
- *     description: Get all dishes
+ *     summary: Get all dishes
+ *     tags:
+ *       - Dishes
  *     responses:
  *       200:
- *         description: Array of dishes
+ *         description: OK
  */
 router.get("/dishes", getDishes);
 
@@ -16,7 +19,9 @@ router.get("/dishes", getDishes);
  * @openapi
  * /api/dishes/insert:
  *   post:
- *     description: Insert sample dishes into DB
+ *     summary: Insert sample dishes
+ *     tags:
+ *       - Dishes
  *     responses:
  *       201:
  *         description: Dishes inserted
