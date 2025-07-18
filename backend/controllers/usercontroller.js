@@ -38,13 +38,17 @@ exports.login = async (req, res) => {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     otpStore[email] = otp;
 
+    console.log(`OTP for ${email}: ${otp}`);
+
     await sendOtpEmail(email, otp);
 
     res.status(200).json({ msg: "OTP sent", email });
   } catch (err) {
-    res.status(500).json({ msg: "Login error", err });
+    console.error("Login Error:", err); // show full error in logs
+    res.status(500).json({ msg: "Login error", error: err.message });
   }
 };
+
 
 exports.verifyOtp = (req, res) => {
   const { email, otp } = req.body;
