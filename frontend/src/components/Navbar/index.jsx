@@ -143,7 +143,7 @@ function Navbar({ setquery, query, food }) {
                 <ul className="space-y-2 text-black font-medium">
                   {token && user ? (
                     <>
-                      <li className="text-sm text-gray-600">Hi, {user.name}</li>
+                     
                       <li>
                         <button
                           onClick={onlogoutclick}
