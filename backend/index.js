@@ -7,6 +7,7 @@ const swaggerUI = require("swagger-ui-express");
 const dishesroutes = require("./routes/dishesroute");
 const authRoutes = require("./routes/userroute");
 const orders = require("./routes/orderroute");
+require('dotenv').config();
 
 const app = express();
 const port = 5000;
