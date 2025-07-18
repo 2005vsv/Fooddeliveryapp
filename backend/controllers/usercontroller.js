@@ -22,7 +22,7 @@ exports.signup = async (req, res) => {
   }
 };
 
-const sendOtpEmail = require("../../frontend/src/utils/sendOtp");
+const sendOtpEmail = require("../utils/sendOtpEmail")
 
 const otpStore = {}; // In-memory store (move to DB/Redis in prod)
 
