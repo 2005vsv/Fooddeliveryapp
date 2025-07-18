@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 import { useState } from "react";
-import { usecart } from "../cartcontext";
+import { Usecart } from "../cartcontext";
 function HorizontalfoodCard({ food }) {
-  const { cartdispatch } = usecart();
+  const { cartdispatch } = Usecart();
   const [count, setcount] = useState(1);
   const onremoveclick = () => {
     cartdispatch({

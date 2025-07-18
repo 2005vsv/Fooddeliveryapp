@@ -12,5 +12,5 @@ const Cartprovider=({children})=>{
         </Cartcontext.Provider>
     )
 }
-const usecart=()=>useContext(Cartcontext);
-export {usecart,Cartprovider}
+const Usecart=()=>useContext(Cartcontext);
+export {Usecart,Cartprovider}

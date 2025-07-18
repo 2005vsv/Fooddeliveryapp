@@ -1,59 +1,62 @@
-import React from "react";
+import React, { useState } from "react";
 import { useregister } from "../../../cartcontext/signupcontext";
 import { userregister } from "../../../Api2/Authsignup";
 import { useNavigate } from "react-router-dom";
-// import { useregister } from "../../../cartcontext/signupcontext";
+
 function Signup() {
   const navigate = useNavigate();
-//   const useregister = useregister();
-//   const { registerdispatch, name, email, password } = useregister();
-const { registerdispatch, name, email, password } = useregister();
-
-// const { name, email, password, registerdispatch } = useregister();
+  const { registerdispatch, name, email, password } = useregister();
+  const [loading, setLoading] = useState(false);
 
   const onformsubmit = async (e) => {
-  e.preventDefault();
-  const res = await userregister(name, email, password);
-  console.log(res);
+    e.preventDefault();
+    setLoading(true);
 
-  if (res?.error) {
-    alert("Signup failed: " + res.error);
-  } else {
-    alert("Signup successful!");
-    navigate("/auth/login");
-  }
-};
+    try {
+      const res = await userregister(name, email, password);
+      console.log("Signup response:", res);
+
+      if (res?.error) {
+        alert("Signup failed: " + res.error);
+        setLoading(false);
+      } else {
+        alert("Signup successful! Redirecting to login...");
+        setTimeout(() => {
+          setLoading(false);
+          navigate("/auth/login");
+        }, 100);
+      }
+    } catch (err) {
+      console.error("Signup error:", err);
+      alert("Something went wrong!");
+      setLoading(false);
+    }
+  };
 
   const onnamechange = (e) => {
     registerdispatch({
       type: "NAME",
-      payload: {
-        value: e.target.value,
-      },
+      payload: { value: e.target.value },
     });
   };
 
   const onemailchange = (e) => {
     registerdispatch({
       type: "EMAIL",
-      payload: {
-        value: e.target.value,
-      },
+      payload: { value: e.target.value },
     });
   };
 
   const onpasswordchange = (e) => {
     registerdispatch({
       type: "PASSWORD",
-      payload: {
-        value: e.target.value,
-      },
+      payload: { value: e.target.value },
     });
   };
 
   return (
     <div className="max-w-md mx-auto mt-10 bg-white shadow-md rounded-lg p-8">
-      <h2 className="text-lg font-bold text-gray-700 mb-4">Signup</h2>
+      <h2 className="text-lg font-bold text-gray-700 mb-4">Create an Account</h2>
       <form onSubmit={onformsubmit}>
         {/* Name Input */}
         <div className="mb-4">
@@ -64,6 +67,7 @@ const { registerdispatch, name, email, password } = useregister();
             onChange={onnamechange}
             type="text"
             required
+            value={name}
             placeholder="Your name"
             className="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-500"
           />
@@ -78,6 +82,7 @@ const { registerdispatch, name, email, password } = useregister();
             onChange={onemailchange}
             type="email"
             required
+            value={email}
             placeholder="abc@gmail.com"
             className="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-500"
           />
@@ -92,6 +97,7 @@ const { registerdispatch, name, email, password } = useregister();
             onChange={onpasswordchange}
             type="password"
             required
+            value={password}
             placeholder="Create a password"
             className="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-500"
           />
@@ -99,11 +105,22 @@ const { registerdispatch, name, email, password } = useregister();
 
         <button
           type="submit"
+          disabled={loading}
           className="w-full bg-indigo-500 hover:bg-indigo-700 text-white font-medium py-2 rounded-md"
         >
-          Create Account
+          {loading ? "Creating Account..." : "Create Account"}
         </button>
       </form>
+
+      <p className="mt-4 text-sm text-center">
+        Already have an account?{" "}
+        <span
+          onClick={() => navigate("/auth/login")}
+          className="text-blue-600 hover:underline cursor-pointer"
+        >
+          Sign in
+        </span>
+      </p>
     </div>
   );
 }

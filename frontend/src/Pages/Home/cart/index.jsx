@@ -1,12 +1,12 @@
 import React from "react";
-import { usecart } from "../../../cartcontext";
+import { Usecart } from "../../../cartcontext";
 import HorizontalfoodCard from "../../../horizontalfoodcard";
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/Navbar/Footer";
 import Pricedetails from "../../../Pricedetails";
 
 function Cart() {
-  const { cart } = usecart();
+  const { cart } = Usecart();
   console.log({ cart });
 
   return (

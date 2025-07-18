@@ -1,9 +1,9 @@
 import React from "react";
-import { usecart } from "../cartcontext";
+import { Usecart } from "../cartcontext";
 import { gettotalcartamount } from "../utils/gettotalcartamount";
 
 function Pricedetails() {
-  const { cart } = usecart();
+  const { cart } = Usecart();
   const totalcartamount = gettotalcartamount(cart);
   const deliverycharge = 20;
   const totalamount = totalcartamount + deliverycharge;

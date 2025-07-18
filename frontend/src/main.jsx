@@ -1,21 +1,20 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-// import './index.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
+import { LoginProvider } from "./cartcontext/logincontext"; // ✅ correct capitalization
 import { Cartprovider } from "./cartcontext/index.jsx";
-import { Loginprovider } from "./cartcontext/logincontext.jsx";
 import { SignupProvider } from "./cartcontext/signupcontext.jsx";
-
-createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <Cartprovider>
-      <Loginprovider>
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <LoginProvider>
         <SignupProvider>
-          <App />
+          <Cartprovider>
+            <App />
+          </Cartprovider>
         </SignupProvider>
-        
-      </Loginprovider>
-    </Cartprovider>
-  </BrowserRouter>
+      </LoginProvider>
+    </BrowserRouter>
+  </React.StrictMode>
 );

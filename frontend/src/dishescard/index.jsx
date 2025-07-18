@@ -1,11 +1,11 @@
 import React from 'react';
-import { usecart } from '../cartcontext';
+import { Usecart } from '../cartcontext';
 import { useNavigate } from 'react-router-dom';
 import { Findfoodincart } from '../utils/findproductincart';
 function DishesCard({ food }) {
   
   const navigate=useNavigate();
-  const {cartdispatch,cart}=usecart();
+  const {cartdispatch,cart}=Usecart();
   const isfoodincart=Findfoodincart(cart,food.id);
   const oncartclick=(food)=>{
     

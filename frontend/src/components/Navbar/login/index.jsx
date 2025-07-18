@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { uselogin } from "../../../cartcontext/logincontext";
 import { userlogin } from "../../../Api2/Auth";
 import { useNavigate } from "react-router-dom";
@@ -6,25 +6,43 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const navigate = useNavigate();
   const { logindispatch, email, password } = uselogin();
+  const [loading, setLoading] = useState(false);
 
   const onformsubmit = async (e) => {
     e.preventDefault();
-    const data = await userlogin(email, password);
-    console.log({ data });
+    setLoading(true);
 
-    if (data.access_token) {
-      // Store token in context and localStorage
-      logindispatch({
-        type: "TOKEN",
-        payload: {
-          token: data.token,
-        },
-      });
+    try {
+      const data = await userlogin(email, password);
+      console.log("Login response:", data);
 
-      localStorage.setItem("token", data.access_token);
-      navigate("/foodpage");
-    } else {
-      alert("Invalid email or password");
+      if (data.token) {
+        // Save token & user in context
+        logindispatch({
+          type: "TOKEN",
+          payload: {
+            token: data.token,
+            user: data.user,
+          },
+        });
+
+        // Save to localStorage
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        // Navigate after short delay
+        setTimeout(() => {
+          setLoading(false);
+          navigate("/foodpage");
+        }, 100);
+      } else {
+        setLoading(false);
+        alert("Invalid email or password");
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+      setLoading(false);
+      alert("Something went wrong during login");
     }
   };
 
@@ -58,6 +76,7 @@ function Login() {
             onChange={onemailchange}
             type="email"
             required
+            value={email}
             placeholder="abc@gmail.com"
             className="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-500"
           />
@@ -71,6 +90,7 @@ function Login() {
             onChange={onpasswordchange}
             type="password"
             required
+            value={password}
             placeholder="Enter your password"
             className="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-500"
           />
@@ -78,11 +98,22 @@ function Login() {
 
         <button
           type="submit"
-          className="w-full bg-indigo-500 hover:bg-indigo-700 text-white font-medium py-2 rounded-md"
+          disabled={loading}
+          className="w-full bg-indigo-500 hover:bg-indigo-700 text-white font-medium py-2 cursor-pointer rounded-md"
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </button>
       </form>
+
+      <p className="mt-4 text-sm text-center">
+        Don't have an account?{" "}
+        <span
+          onClick={() => navigate("/auth/signup")}
+          className="text-blue-600 hover:underline cursor-pointer"
+        >
+          Sign up
+        </span>
+      </p>
     </div>
   );
 }

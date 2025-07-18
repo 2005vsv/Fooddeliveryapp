@@ -46,3 +46,4 @@ export const SignupProvider = ({ children }) => {
 
 // 5️⃣ Custom Hook to Use Context
 export const useregister = () => useContext(SignupContext);
+
