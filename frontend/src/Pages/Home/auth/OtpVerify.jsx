@@ -13,7 +13,7 @@ const OtpVerify = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post("/api/auth/verify-otp", { email, otp });
+      const res = await axios.post("https://fooddeliveryapp-jtwk.onrender.com/api/auth/verify-otp", { email, otp });
       const { token } = res.data;
       localStorage.setItem("token", token);
       setLoading(false);
