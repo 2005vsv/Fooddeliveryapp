@@ -12,12 +12,13 @@ function Login() {
     e.preventDefault();
     setLoading(true);
 
+    console.log("Trying to login with:", email, password); // Debug
+
     try {
       const data = await userlogin(email, password);
       console.log("Login response:", data);
 
-      if (data.token) {
-        // Save token & user in context
+      if (data?.token) {
         logindispatch({
           type: "TOKEN",
           payload: {
@@ -26,41 +27,35 @@ function Login() {
           },
         });
 
-        // Save to localStorage
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
 
-        // Navigate after short delay
         setTimeout(() => {
           setLoading(false);
           navigate("/foodpage");
         }, 100);
       } else {
         setLoading(false);
-        alert("Invalid email or password");
+        alert("Invalid email or password. Please check and try again.");
       }
     } catch (error) {
       console.error("Login failed:", error);
       setLoading(false);
-      alert("Something went wrong during login");
+      alert("Error during login. Please try again.");
     }
   };
 
   const onemailchange = (e) => {
     logindispatch({
       type: "EMAIL",
-      payload: {
-        value: e.target.value,
-      },
+      payload: { value: e.target.value },
     });
   };
 
   const onpasswordchange = (e) => {
     logindispatch({
       type: "PASSWORD",
-      payload: {
-        value: e.target.value,
-      },
+      payload: { value: e.target.value },
     });
   };
 
