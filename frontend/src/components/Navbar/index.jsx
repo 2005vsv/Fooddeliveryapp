@@ -6,16 +6,16 @@ import { uselogin } from "../../cartcontext/logincontext";
 function Navbar({ setquery, query, food }) {
   const navigate = useNavigate();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isaccountdropdownopen, setisaccountdropdownopen] = useState(false);
+  const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const { cart } = Usecart();
   const { token, user, logindispatch } = uselogin();
-  const [searchdata, setsearchdata] = useState([]);
+  const [searchdata, setSearchdata] = useState([]);
 
   useEffect(() => {
     if (query !== "") {
-      setsearchdata(food);
+      setSearchdata(food);
     } else {
-      setsearchdata([]);
+      setSearchdata([]);
     }
   }, [query, food]);
 
@@ -92,155 +92,106 @@ function Navbar({ setquery, query, food }) {
           )}
         </div>
 
-        {/* Nav Links & Icons */}
+        {/* Right-side */}
         <div className="flex items-center space-x-5">
           <ul className="hidden md:flex space-x-6 text-gray-700 font-medium">
-            <li
-              onClick={() => handleNavigate("/")}
-              className="hover:text-indigo-600 cursor-pointer"
-            >
-              Home
-            </li>
-            <li
-              onClick={() => handleNavigate("/About")}
-              className="hover:text-indigo-600 cursor-pointer"
-            >
-              About
-            </li>
-            <li
-              onClick={() => handleNavigate("/Contact")}
-              className="hover:text-indigo-600 cursor-pointer"
-            >
-              Contact
-            </li>
+            <li onClick={() => handleNavigate("/")} className="hover:text-indigo-600 cursor-pointer">Home</li>
+            <li onClick={() => handleNavigate("/About")} className="hover:text-indigo-600 cursor-pointer">About</li>
+            <li onClick={() => handleNavigate("/Contact")} className="hover:text-indigo-600 cursor-pointer">Contact</li>
           </ul>
 
-          {/* Cart & Account */}
-          <div className="flex items-center space-x-4 cursor-pointer">
-            {/* Cart */}
-            <button
-              onClick={() => navigate("/cart")}
-              className="relative p-1.5 rounded-full cursor-pointer hover:bg-gray-100"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 -960 960 960"
-                width="24px"
-                fill="#000000"
-              >
-                <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z" />
-              </svg>
-              {cart.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-amber-400 text-black text-xs font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white">
-                  {cart.length}
-                </span>
-              )}
-            </button>
+          {/* Cart */}
+          <button
+            onClick={() => navigate("/cart")}
+            className="relative p-1.5 rounded-full hover:bg-gray-100"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+              <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Z" />
+            </svg>
+            {cart.length > 0 && (
+              <span className="absolute -top-1 -right-1 bg-amber-400 text-black text-xs font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white">
+                {cart.length}
+              </span>
+            )}
+          </button>
 
-            {/* Account Dropdown */}
-            <div className="relative cursor-pointer">
-              <div
-                onClick={() => setisaccountdropdownopen(!isaccountdropdownopen)}
-                className="cursor-pointer flex items-center justify-center w-8 h-8 bg-gray-200 rounded-full hover:bg-indigo-500 hover:text-white"
-              >
-                {token && user ? (
-                  <span className="text-sm font-bold uppercase">
-                    {user.name[0]}
-                  </span>
-                ) : (
-                  <svg
-                    className="w-6 h-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 -960 960 960"
-                  >
-                    <path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Z" />
-                  </svg>
-                )}
-              </div>
-              {isaccountdropdownopen && (
-                <div className="absolute top-full cursor-pointer right-0 bg-white shadow-md rounded-md py-2 px-4 z-10 w-40">
-                  <ul className="space-y-2 text-black font-medium">
-                    {token && user ? (
-                      <>
-                        {/* <li className="text-sm text-gray-600 px-2">
-                          Hi, {user.name}
-                        </li> */}
-                        <li>
-                          <button
-                            onClick={onlogoutclick}
-                            className="w-full cursor-pointer text-left text-red-600 hover:text-red-800"
-                          >
-                            Logout
-                          </button>
-                        </li>
-                      </>
-                    ) : (
-                      <>
-                        <li>
-                          <button
-                            onClick={onloginclick}
-                            className="w-full cursor-pointer text-left hover:text-indigo-600"
-                          >
-                            Login
-                          </button>
-                        </li>
-                        <li>
-                          <button
-                            onClick={onsignupclick}
-                            className="w-full cursor-pointer text-left hover:text-indigo-600"
-                          >
-                            Signup
-                          </button>
-                        </li>
-                      </>
-                    )}
-                  </ul>
-                </div>
+          {/* Account Dropdown */}
+          <div className="relative cursor-pointer">
+            <div
+              onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
+              className="cursor-pointer flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full hover:ring-2 hover:ring-indigo-400"
+            >
+              {token && user?.image ? (
+                <img
+                  src={user.image}
+                  alt="Profile"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+              ) : token && user?.name ? (
+                <span className="text-sm font-bold uppercase text-indigo-700">
+                  {user.name[0]}
+                </span>
+              ) : (
+                <svg className="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z" />
+                </svg>
               )}
             </div>
 
-            {/* Hamburger Menu */}
-            <button
-              onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden focus:outline-none"
-            >
-              <svg
-                className="w-6 h-6 text-gray-700"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M4,6H20V8H4V6ZM4,11H20v2H4V11ZM4,16H20v2H4V16Z" />
-              </svg>
-            </button>
+            {isAccountDropdownOpen && (
+              <div className="absolute top-full right-0 mt-2 bg-white shadow-md rounded-md py-2 px-4 z-20 w-40">
+                <ul className="space-y-2 text-black font-medium">
+                  {token && user ? (
+                    <>
+                      <li className="text-sm text-gray-600">Hi, {user.name}</li>
+                      <li>
+                        <button
+                          onClick={onlogoutclick}
+                          className="w-full text-left text-red-600 hover:text-red-800"
+                        >
+                          Logout
+                        </button>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li>
+                        <button onClick={onloginclick} className="w-full text-left hover:text-indigo-600">Login</button>
+                      </li>
+                      <li>
+                        <button onClick={onsignupclick} className="w-full text-left hover:text-indigo-600">Signup</button>
+                      </li>
+                    </>
+                  )}
+                </ul>
+              </div>
+            )}
           </div>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden focus:outline-none"
+          >
+            <svg
+              className="w-6 h-6 text-gray-700"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M4,6H20V8H4V6ZM4,11H20v2H4V11ZM4,16H20v2H4V16Z" />
+            </svg>
+          </button>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Nav Links */}
       {isMobileMenuOpen && (
-        <div className="md:hidden flex flex-col space-y-2 bg-white shadow-md px-6 py-4 animate-fade-in-down">
+        <div className="md:hidden flex flex-col space-y-2 bg-white shadow-md px-6 py-4">
           <ul className="space-y-3 text-gray-700 font-medium">
-            <li
-              onClick={() => handleNavigate("/")}
-              className="hover:text-indigo-600 cursor-pointer"
-            >
-              Home
-            </li>
-            <li
-              onClick={() => handleNavigate("/About")}
-              className="hover:text-indigo-600 cursor-pointer"
-            >
-              About
-            </li>
-            <li
-              onClick={() => handleNavigate("/Contact")}
-              className="hover:text-indigo-600 cursor-pointer"
-            >
-              Contact
-            </li>
+            <li onClick={() => handleNavigate("/")} className="hover:text-indigo-600 cursor-pointer">Home</li>
+            <li onClick={() => handleNavigate("/About")} className="hover:text-indigo-600 cursor-pointer">About</li>
+            <li onClick={() => handleNavigate("/Contact")} className="hover:text-indigo-600 cursor-pointer">Contact</li>
           </ul>
         </div>
       )}
