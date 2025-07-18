@@ -1,31 +1,24 @@
 const sgMail = require("@sendgrid/mail");
 const dotenv=require("dotenv");
 dotenv.config();
-if (!process.env.SENDGRID_API_KEY) {
-  console.error("❌ SENDGRID_API_KEY not found in environment variables");
-}
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const sendOtpEmail = async (email, otp) => {
+const sendEmail = async (to, subject, text) => {
   const msg = {
-    to: email,
+    to,
     from: process.env.SENDER_EMAIL,
-    subject: "Your OTP Code",
-    text: `Your OTP is ${otp}`,
-    html: `<p>Your OTP is: <strong>${otp}</strong></p>`,
+    subject,
+    text,
   };
 
   try {
     await sgMail.send(msg);
-    console.log(`✅ OTP email sent to ${email}`);
+    console.log("✅ Email sent to", to);
   } catch (error) {
-    console.error("❌ SendGrid Error:", error.message);
-    if (error.response?.body?.errors) {
-      console.error("Details:", error.response.body.errors);
-    }
+    console.error("❌ Email error:", error.response?.body || error.message);
     throw new Error("Failed to send OTP email");
   }
 };
 
-module.exports = sendOtpEmail;
+module.exports = sendEmail;
