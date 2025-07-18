@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUI = require("swagger-ui-express");
-
+const dotenv=require("dotenv");
 const dishesroutes = require("./routes/dishesroute");
 const authRoutes = require("./routes/userroute");
 const orders = require("./routes/orderroute");
-require('dotenv').config();
+dotenv.config();
 
 const app = express();
 const port = 5000;
