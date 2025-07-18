@@ -3,29 +3,16 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUI = require("swagger-ui-express");
-const dotenv=require("dotenv");
+const dotenv = require("dotenv");
+
 const dishesroutes = require("./routes/dishesroute");
 const authRoutes = require("./routes/userroute");
 const orders = require("./routes/orderroute");
+
 dotenv.config();
 
 const app = express();
-const port = 5000;
-
-// ✅ Swagger Configuration
-const options = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "Food Delivery API",
-      version: "1.0.0",
-    },
-  },
-  apis: ["./routes/*.js"], // All route files with Swagger JSDoc
-};
-
-const openapiSpecification = swaggerJsdoc(options);
-app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(openapiSpecification));
+const port = process.env.PORT || 5000;
 
 // ✅ CORS Configuration
 const allowedOrigins = [
@@ -46,39 +33,45 @@ app.use(
   })
 );
 
-// FIXED: Changed app.options("*", cors()) to app.options("/*", cors()) for Express 5+
-app.options("/*splat", cors());
-// Alternatively, you can use:
-// app.options("/*splat", cors());
-
-
 // ✅ Express JSON Parser
 app.use(express.json());
 
 // ✅ Logger Middleware
 app.use((req, res, next) => {
   console.log(
-    "Time:",
-    new Date().toISOString(),
-    "| Method:",
-    req.method,
-    "| Path:",
-    req.path
+    "Time:", new Date().toISOString(),
+    "| Method:", req.method,
+    "| Path:", req.path
   );
   next();
 });
+
+// ✅ Swagger Setup
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Food Delivery API",
+      version: "1.0.0",
+    },
+  },
+  apis: ["./routes/*.js"],
+};
+
+const openapiSpecification = swaggerJsdoc(options);
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(openapiSpecification));
 
 // ✅ Routes
 app.use("/api", dishesroutes);
 app.use("/api/auth", authRoutes);
 app.use("/api", orders);
 
-// ✅ Home Route
+// ✅ Root route
 app.get("/", (req, res) => {
   res.send("Welcome to the Food Delivery API!");
 });
 
-// ✅ MongoDB Connection
+// ✅ MongoDB Connection (Hardcoded URI)
 async function connectDB() {
   try {
     await mongoose.connect(
@@ -93,5 +86,5 @@ connectDB();
 
 // ✅ Start Server
 app.listen(port, () => {
-  console.log(`🚀 Server running at http://localhost:${port}`);
+  console.log(`🚀 Server running on port ${port}`);
 });
