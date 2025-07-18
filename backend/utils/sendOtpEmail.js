@@ -1,5 +1,6 @@
 const sgMail = require("@sendgrid/mail");
-
+const dotenv=require("dotenv");
+dotenv.config();
 if (!process.env.SENDGRID_API_KEY) {
   console.error("❌ SENDGRID_API_KEY not found in environment variables");
 }
