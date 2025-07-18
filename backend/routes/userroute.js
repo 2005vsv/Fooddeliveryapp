@@ -1,5 +1,5 @@
 const express = require("express");
-const { signup, login } = require("../controllers/usercontroller");
+const { signup, login,verifyOTP } = require("../controllers/usercontroller");
 const router = express.Router();
 
 /**
@@ -45,5 +45,6 @@ router.post("/signup", signup);
  *         description: Login success
  */
 router.post("/login", login);
+router.post("/verify-otp", verifyOTP);
 
 module.exports = router;

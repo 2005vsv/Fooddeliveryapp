@@ -22,30 +22,40 @@ exports.signup = async (req, res) => {
   }
 };
 
+const sendOtpEmail = require("../../frontend/src/utils/sendOtp");
+
+const otpStore = {}; // In-memory store (move to DB/Redis in prod)
+
 exports.login = async (req, res) => {
   const { email, password } = req.body;
-  console.log("Login request:", email, password);
-
   try {
     const user = await User.findOne({ email });
-    if (!user) {
-      console.log("User not found");
-      return res.status(400).json({ msg: "User not found" });
-    }
+    if (!user) return res.status(400).json({ msg: "User not found" });
 
     const match = await bcrypt.compare(password, user.password);
-    console.log("Password match:", match);
+    if (!match) return res.status(401).json({ msg: "Invalid password" });
 
-    if (!match) {
-      return res.status(401).json({ msg: "Invalid password" });
-    }
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    otpStore[email] = otp;
 
-    const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: "1d" });
+    await sendOtpEmail(email, otp);
 
-    res.status(200).json({ token, user: { name: user.name, email: user.email } });
+    res.status(200).json({ msg: "OTP sent", email });
   } catch (err) {
-    console.error("Login error:", err);
-    res.status(500).json({ msg: "Error logging in", err });
+    res.status(500).json({ msg: "Login error", err });
+  }
+};
+
+exports.verifyOtp = (req, res) => {
+  const { email, otp } = req.body;
+  const storedOtp = otpStore[email];
+
+  if (storedOtp && storedOtp === otp) {
+    delete otpStore[email]; // clear after use
+    const token = jwt.sign({ userId: email }, JWT_SECRET, { expiresIn: "1d" });
+    res.status(200).json({ msg: "OTP verified", token });
+  } else {
+    res.status(401).json({ msg: "Invalid OTP" });
   }
 };
 

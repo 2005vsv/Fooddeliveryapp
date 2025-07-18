@@ -32,7 +32,8 @@ function Login() {
 
         setTimeout(() => {
           setLoading(false);
-          navigate("/foodpage");
+          // Inside your onformsubmit try block
+          navigate("/auth/otp", { state: { email } });
         }, 100);
       } else {
         setLoading(false);

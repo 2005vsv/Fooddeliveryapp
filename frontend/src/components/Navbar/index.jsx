@@ -95,18 +95,39 @@ function Navbar({ setquery, query, food }) {
         {/* Right-side */}
         <div className="flex items-center space-x-5">
           <ul className="hidden md:flex space-x-6 text-gray-700 font-medium">
-            <li onClick={() => handleNavigate("/")} className="hover:text-indigo-600 cursor-pointer">Home</li>
-            <li onClick={() => handleNavigate("/About")} className="hover:text-indigo-600 cursor-pointer">About</li>
-            <li onClick={() => handleNavigate("/Contact")} className="hover:text-indigo-600 cursor-pointer">Contact</li>
+            <li
+              onClick={() => handleNavigate("/")}
+              className="hover:text-indigo-600 cursor-pointer"
+            >
+              Home
+            </li>
+            <li
+              onClick={() => handleNavigate("/About")}
+              className="hover:text-indigo-600 cursor-pointer"
+            >
+              About
+            </li>
+            <li
+              onClick={() => handleNavigate("/Contact")}
+              className="hover:text-indigo-600 cursor-pointer"
+            >
+              Contact
+            </li>
           </ul>
 
           {/* Cart */}
           <button
             onClick={() => navigate("/cart")}
-            className="relative p-1.5 rounded-full hover:bg-gray-100"
+            className="relative p-1.5 cursor-pointer rounded-full hover:bg-gray-100"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-              <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#000000"
+            >
+              <path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z" />
             </svg>
             {cart.length > 0 && (
               <span className="absolute -top-1 -right-1 bg-amber-400 text-black text-xs font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-white">
@@ -132,7 +153,11 @@ function Navbar({ setquery, query, food }) {
                   {user.name[0]}
                 </span>
               ) : (
-                <svg className="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="w-6 h-6 text-gray-600"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z" />
                 </svg>
               )}
@@ -143,11 +168,10 @@ function Navbar({ setquery, query, food }) {
                 <ul className="space-y-2 text-black font-medium">
                   {token && user ? (
                     <>
-                     
                       <li>
                         <button
                           onClick={onlogoutclick}
-                          className="w-full text-left text-red-600 hover:text-red-800"
+                          className="w-full cursor-pointer text-left text-red-600 hover:text-red-800"
                         >
                           Logout
                         </button>
@@ -156,10 +180,20 @@ function Navbar({ setquery, query, food }) {
                   ) : (
                     <>
                       <li>
-                        <button onClick={onloginclick} className="w-full text-left hover:text-indigo-600">Login</button>
+                        <button
+                          onClick={onloginclick}
+                          className="w-full text-left hover:text-indigo-600"
+                        >
+                          Login
+                        </button>
                       </li>
                       <li>
-                        <button onClick={onsignupclick} className="w-full text-left hover:text-indigo-600">Signup</button>
+                        <button
+                          onClick={onsignupclick}
+                          className="w-full text-left hover:text-indigo-600"
+                        >
+                          Signup
+                        </button>
                       </li>
                     </>
                   )}
@@ -189,9 +223,24 @@ function Navbar({ setquery, query, food }) {
       {isMobileMenuOpen && (
         <div className="md:hidden flex flex-col space-y-2 bg-white shadow-md px-6 py-4">
           <ul className="space-y-3 text-gray-700 font-medium">
-            <li onClick={() => handleNavigate("/")} className="hover:text-indigo-600 cursor-pointer">Home</li>
-            <li onClick={() => handleNavigate("/About")} className="hover:text-indigo-600 cursor-pointer">About</li>
-            <li onClick={() => handleNavigate("/Contact")} className="hover:text-indigo-600 cursor-pointer">Contact</li>
+            <li
+              onClick={() => handleNavigate("/")}
+              className="hover:text-indigo-600 cursor-pointer"
+            >
+              Home
+            </li>
+            <li
+              onClick={() => handleNavigate("/About")}
+              className="hover:text-indigo-600 cursor-pointer"
+            >
+              About
+            </li>
+            <li
+              onClick={() => handleNavigate("/Contact")}
+              className="hover:text-indigo-600 cursor-pointer"
+            >
+              Contact
+            </li>
           </ul>
         </div>
       )}
