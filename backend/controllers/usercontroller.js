@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const Otp=require("../models/Otp");
 const JWT_SECRET = "eD9vK7k2qJz@bY#P3g!XfL$zW0uRqT1s"; // store in env
 const sendOtpEmail = require("../utils/sendOtpEmail")
+require('dotenv').config();
 exports.signup = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -55,7 +56,7 @@ exports.login = async (req, res) => {
 
     return res.status(200).json({ message: "OTP sent to email", email });
   } catch (err) {
-    console.error("Login error:", err.message);
+    console.error("Login error (full):", err);
     return res.status(500).json({ error: "Login error" });
   }
 };
