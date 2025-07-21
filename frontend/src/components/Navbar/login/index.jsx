@@ -33,7 +33,7 @@ function Login() {
         setTimeout(() => {
           setLoading(false);
           // Inside your onformsubmit try block
-          navigate("/auth/otp", { state: { email } });
+          navigate("/auth/verify-otp", { state: { email } });
         }, 100);
       } else {
         setLoading(false);

@@ -2,7 +2,7 @@ const User = require('../models/user');
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Otp=require("../models/Otp");
-const JWT_SECRET = "your_jwt_secret"; // store in env
+const JWT_SECRET = "eD9vK7k2qJz@bY#P3g!XfL$zW0uRqT1s"; // store in env
 const sendOtpEmail = require("../utils/sendOtpEmail")
 exports.signup = async (req, res) => {
   const { name, email, password } = req.body;
@@ -21,6 +21,8 @@ exports.signup = async (req, res) => {
     res.status(500).json({ msg: "Error signing up", err });
   }
 };
+
+
 
 
 
