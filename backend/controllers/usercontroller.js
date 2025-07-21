@@ -52,7 +52,7 @@ exports.login = async (req, res) => {
     await Otp.create({ email, otp: otpCode });
 
     // Send email
-    await sendOtpEmail(email, "Your OTP for Login", `Your OTP is: ${otpCode}`);
+    // await sendOtpEmail(email, "Your OTP for Login", `Your OTP is: ${otpCode}`);
 
     return res.status(200).json({ message: "OTP sent to email", email });
   } catch (err) {
