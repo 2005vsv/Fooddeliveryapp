@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { uselogin } from "../../../cartcontext/logincontext";
-import { userlogin } from "../../../Api2/Auth";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { userlogin } from "../../../Api2/Auth";
+import { uselogin } from "../../../cartcontext/logincontext";
 
 function Login() {
   const navigate = useNavigate();
@@ -12,35 +12,16 @@ function Login() {
     e.preventDefault();
     setLoading(true);
 
-    console.log("Trying to login with:", email, password); // Debug
-
     try {
       const data = await userlogin(email, password);
-      console.log("Login response:", data);
-
-      if (data?.token) {
-        logindispatch({
-          type: "TOKEN",
-          payload: {
-            token: data.token,
-            user: data.user,
-          },
-        });
-
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-
-        setTimeout(() => {
-          setLoading(false);
-          // Inside your onformsubmit try block
-          navigate("/auth/verify-otp", { state: { email } });
-        }, 100);
+      if (data?.message && data.message.includes("OTP")) {
+        setLoading(false);
+        navigate("/auth/verify-otp", { state: { email } });
       } else {
         setLoading(false);
-        alert("Invalid email or password. Please check and try again.");
+        alert(data?.error || "Invalid email or password. Please check and try again.");
       }
     } catch (error) {
-      console.error("Login failed:", error);
       setLoading(false);
       alert("Error during login. Please try again.");
     }
