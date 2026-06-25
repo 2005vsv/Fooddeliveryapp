@@ -20,7 +20,7 @@ function Login() {
           payload: { token: data.token, user: data.user },
         });
         setLoading(false);
-        navigate("/");
+        navigate("/foodpage");
       } else {
         setLoading(false);
         alert(data?.error || "Invalid email or password. Please check and try again.");
