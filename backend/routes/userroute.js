@@ -45,6 +45,5 @@ router.post("/signup", signup);
  *         description: Login success
  */
 router.post("/login", login);
-router.post("/verify-otp", verifyOtp);
 
 module.exports = router;

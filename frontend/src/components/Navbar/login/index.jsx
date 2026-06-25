@@ -14,9 +14,13 @@ function Login() {
 
     try {
       const data = await userlogin(email, password);
-      if (data?.message && data.message.includes("OTP")) {
+      if (data?.token) {
+        logindispatch({
+          type: "TOKEN",
+          payload: { token: data.token, user: data.user },
+        });
         setLoading(false);
-        navigate("/auth/verify-otp", { state: { email } });
+        navigate("/");
       } else {
         setLoading(false);
         alert(data?.error || "Invalid email or password. Please check and try again.");
